@@ -1,4 +1,4 @@
-package com.rhm.server.data.services;
+package com.rhm.server.services;
 
 import com.rhm.server.data.models.User;
 import com.rhm.server.data.repositories.UserRepository;
@@ -20,7 +20,7 @@ public class UserService {
   }
 
   @Async
-  public CompletableFuture<User> createUser() {
-    return CompletableFuture.completedFuture(new User());
+  public CompletableFuture<User> createUser(User user) {
+    return CompletableFuture.completedFuture(user);
   }
 }

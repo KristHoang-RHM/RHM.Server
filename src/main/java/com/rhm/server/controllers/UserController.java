@@ -1,7 +1,7 @@
 package com.rhm.server.controllers;
 
 import com.rhm.server.data.models.User;
-import com.rhm.server.data.services.UserService;
+import com.rhm.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.CrossOrigin;

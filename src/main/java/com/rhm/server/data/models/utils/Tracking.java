@@ -1,4 +1,4 @@
-package com.rhm.server.models;
+package com.rhm.server.data.models.utils;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;

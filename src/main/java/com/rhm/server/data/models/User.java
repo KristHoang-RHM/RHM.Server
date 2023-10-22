@@ -1,76 +1,43 @@
 package com.rhm.server.data.models;
 
-import com.rhm.server.models.Audit;
-import com.rhm.server.models.Role;
-import com.rhm.server.models.Tracking;
+import com.rhm.server.data.models.utils.Role;
+import com.rhm.server.data.models.utils.Status;
 import jakarta.persistence.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
 @Table(name = "Users")
-public class User implements Serializable, Tracking, Audit {
+public class User implements Serializable {
+  @Enumerated(EnumType.STRING)
+  @Column(columnDefinition = "status")
+  private Status status = Status.Available;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer Id;
-
   private String UserName;
-
   private String FullName;
   private String Email;
   private String PhoneNumber;
-
   private String HashedPassword;
-
+  private Timestamp CreatedAt = null;
+  private Timestamp UpdatedAt = null;
   @Enumerated(EnumType.STRING)
   @Column(name = "role")
   private Role Role;
 
-  public Integer getId() {
-    return Id;
-  }
+  @OneToOne
+  @NotFound(action = NotFoundAction.IGNORE)
+  private Customer Customer;
 
-  public void setId(Integer id) {
-    Id = id;
-  }
+  @OneToMany(mappedBy = "Owner", fetch = FetchType.LAZY)
+  private Collection<House> OwnedHouses;
 
-  public String getUserName() {
-    return UserName;
-  }
-
-  public void setUserName(String userName) {
-    UserName = userName;
-  }
-
-  public String getFullName() {
-    return FullName;
-  }
-
-  public void setFullName(String fullName) {
-    FullName = fullName;
-  }
-
-  public String getEmail() {
-    return Email;
-  }
-
-  public void setEmail(String email) {
-    Email = email;
-  }
-
-  public String getPhoneNumber() {
-    return PhoneNumber;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
-    PhoneNumber = phoneNumber;
-  }
-
-  public Role getRole() {
-    return Role;
-  }
-
-  public void setRole(Role role) {
-    Role = role;
-  }
+  @OneToOne(mappedBy = "Manager", fetch = FetchType.LAZY)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private House ManageHouse;
 }
